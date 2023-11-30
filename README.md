@@ -1,23 +1,22 @@
 # Ceph intall on shell
-Ceph storage installing by cephadm
-
+This manual describes the installation of Ceph storage installing by cephadm.
 Source [link](https://docs.ceph.com/en/latest/cephadm/install)
 
 ## step 1
-Install packages
+Install packages and dependencies
 ```bash
 apt update
 apt install -y cephadm ceph-common
 ```
 
 ## step 2
-start stand alone
+Start Ceph in standalone mode
 ```bash
 cephadm bootstrap --mon-ip 192.168.12.202 --initial-dashboard-user tbs --initial-dashboard-password P@ssw0rd --dashboard-password-noupdate --cluster-network 192.168.12.0/24 --single-host-defaults >> ceph_installation.log 2>&1 
 ```
-copy dashbaord password 
+Don't forgot, save your 'dashboard password'. 
 
-The --single-host-defaults flag sets the following configuration options:
+The _--single-host-defaults_ flag sets the following configuration options:
 ```
 global/osd_crush_chooseleaf_type = 0
 global/osd_pool_default_size = 2
@@ -72,7 +71,7 @@ ceph orch daemon add osd node02:/dev/sde
 ceph osd tree
 ```
 
-## ebable web dashboard
+## Enable web dashboard
 ```bash
 # check all service and states
 ceph mgr module ls
@@ -84,9 +83,8 @@ ceph mgr module enable dashboard
 
 # Additional optoins
 ```bash
-#Then enable memory autotuning:
+# Enable memory autotuning:
 ceph config set osd osd_memory_target_autotune true
 
-# dashboar [ssl](https://docs.ceph.com/en/latest/cephadm/install/#deployment-with-ca-signed-ssh-keys)
-
+# Dashboar [ssl](https://docs.ceph.com/en/latest/cephadm/install/#deployment-with-ca-signed-ssh-keys)
 ```
