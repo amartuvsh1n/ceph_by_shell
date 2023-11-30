@@ -1,7 +1,7 @@
 # Ceph intall on shell
 Ceph storage installing by cephadm
 
-source [link](https://docs.ceph.com/en/latest/cephadm/install/#cephadm-install-curl)
+Source [link](https://docs.ceph.com/en/latest/cephadm/install)
 
 ## step 1
 Install packages
@@ -56,9 +56,37 @@ ceph -s
 # display all disks
 ceph orch device ls
 
-# Tell Ceph to consume any available and unused storage device
+# Tell Ceph to consume any available and unused storage device (all avialable disks join to cluster)
 ceph orch apply osd --all-available-devices
+# or add manually
+ceph orch daemon add osd node01:/dev/sdd
+
+# if remote node disk's 
+# 1st add node [guide](ADD_HOST.md)
+ceph orch apply osd --all-available-devices
+# or manually
+ceph orch daemon add osd node02:/dev/sdd
+ceph orch daemon add osd node02:/dev/sde
 
 # display all osd
 ceph osd tree
+```
+
+## ebable web dashboard
+```bash
+# check all service and states
+ceph mgr module ls
+# enable dashboard
+ceph mgr module enable dashboard
+```
+##  OpenStack integration
+...
+
+# Additional optoins
+```bash
+#Then enable memory autotuning:
+ceph config set osd osd_memory_target_autotune true
+
+# dashboar [ssl](https://docs.ceph.com/en/latest/cephadm/install/#deployment-with-ca-signed-ssh-keys)
+
 ```
