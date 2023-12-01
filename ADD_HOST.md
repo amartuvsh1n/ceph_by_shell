@@ -1,6 +1,18 @@
 source [link](https://docs.ceph.com/en/pacific/cephadm/host-management/#adding-hosts)
 
-ceph ni full privledged usereer yavdag tul 'root' user hereglev
+ceph heregleh user, full privileged user (sudo user) bh heregtei. 
+```bash
+ssh node02
+adduser ceph
+usermod -aG sudo ceph
+# passwordless sudo
+cat << EOF >/etc/sudoers.d/ceph
+ceph ALL = (root) NOPASSWD:ALL
+Defaults:ceph !requiretty
+EOF
+```
+
+esvel 'root' user hereglev
 ```bash
 # set root user password
 passwd root
@@ -11,8 +23,9 @@ sudo systemctl restart sshd
 ```
 
 ```bash
-ssh-copy-id -f -i /etc/ceph/ceph.pub root@node02
-# root user password
+ssh-copy-id -f -i /etc/ceph/ceph.pub ceph@node02
+# ceph user password
+# or you can use root user (be careful! if using 'root' user) 
 ```
 
 Add host
